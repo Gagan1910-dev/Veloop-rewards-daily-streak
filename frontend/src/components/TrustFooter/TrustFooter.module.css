@@ -1,0 +1,85 @@
+.footerContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto 2.5rem;
+  padding: 0 1rem;
+}
+
+.trustBar {
+  background: linear-gradient(135deg, rgba(30, 24, 60, 0.7) 0%, rgba(18, 14, 38, 0.9) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trustBar:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: linear-gradient(135deg, rgba(38, 30, 75, 0.8) 0%, rgba(24, 18, 50, 0.95) 100%);
+  transform: translateY(-2px);
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brandBadge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffd700, #f59e0b);
+  color: #000000;
+  font-weight: 900;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+  flex-shrink: 0;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.officialTitle {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.arrowIcon {
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.trustBar:hover .arrowIcon {
+  transform: translateX(4px);
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .trustBar {
+    padding: 0.85rem 1rem;
+  }
+  .officialTitle {
+    font-size: 0.85rem;
+  }
+  .tagline {
+    font-size: 0.75rem;
+  }
+}

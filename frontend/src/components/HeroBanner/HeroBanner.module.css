@@ -1,0 +1,136 @@
+.heroSection {
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.5rem auto 1rem;
+  padding: 0 1rem;
+}
+
+.heroCard {
+  background: linear-gradient(135deg, #1b1338 0%, #16102e 50%, #1f1545 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 24px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.heroCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.textContent {
+  max-width: 550px;
+  z-index: 2;
+}
+
+.heading {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.highlightText {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.subheading {
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.desktopVisuals {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 2;
+  position: relative;
+}
+
+.topLeftImg {
+  width: 190px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+  animation: floatSlow 4s ease-in-out infinite alternate;
+}
+
+.topRightImg {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.6));
+  animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+}
+
+.mobileVisual {
+  display: none;
+}
+
+@keyframes floatSlow {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@media (max-width: 992px) {
+  .heroCard {
+    padding: 1.75rem 2rem;
+  }
+  .heading {
+    font-size: 1.8rem;
+  }
+  .topLeftImg {
+    width: 140px;
+  }
+  .topRightImg {
+    width: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+    gap: 1.5rem;
+  }
+  .heading {
+    font-size: 1.55rem;
+  }
+  .subheading {
+    font-size: 0.95rem;
+  }
+  .desktopVisuals {
+    display: none;
+  }
+  .mobileVisual {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .mobileHeroImg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+  }
+}

@@ -1,0 +1,57 @@
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import authRoutes from './routes/auth.routes.js';
+import streakRoutes from './routes/streak.routes.js';
+
+const app = express();
+
+import mongoose from 'mongoose';
+
+// Security and utility middleware
+app.use(helmet());
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true
+}));
+app.use(express.json());
+app.use(morgan('dev'));
+
+// Foundation Health Check Endpoint
+const healthCheckHandler = (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: 'online',
+    service: 'VELoop Rewards API',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    serverTime: new Date().toISOString()
+  });
+};
+
+app.get('/health', healthCheckHandler);
+app.get('/api/health', healthCheckHandler);
+
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/daily-streak', streakRoutes);
+
+// Centralized 404 Handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API Route not found: ${req.originalUrl}`
+  });
+});
+
+// Centralized Error Handler
+app.use((err, req, res, next) => {
+  console.error('[Unhandled Error]', err);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
+});
+
+export default app;

@@ -1,0 +1,58 @@
+.skeletonWrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerAnim 1.6s infinite linear;
+  border-radius: 16px;
+}
+
+@keyframes shimmerAnim {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.heroSkeleton {
+  height: 180px;
+  border-radius: 24px;
+}
+
+.statsSkeleton {
+  height: 90px;
+  border-radius: 18px;
+}
+
+.ultimateSkeleton {
+  height: 120px;
+  border-radius: 20px;
+}
+
+.cardsGridSkeleton {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cardSkeleton {
+  height: 200px;
+  border-radius: 18px;
+}
+
+@media (max-width: 992px) {
+  .cardsGridSkeleton {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
