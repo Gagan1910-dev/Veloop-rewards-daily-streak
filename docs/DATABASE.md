@@ -87,7 +87,7 @@ This document outlines the MongoDB schemas, data models, relational mappings, in
 ---
 
 ### 1.6. `WalletTransaction` (`backend/src/models/WalletTransaction.js`)
-* **Purpose**: Double-entry financial audit ledger.
+* **Purpose**: Backend-controlled wallet transaction ledger with balanceBefore/balanceAfter and unique transaction references.
 * **Fields**:
   * `transactionId`: String (unique UUID)
   * `userId`: ObjectId (ref `User`, required)

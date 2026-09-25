@@ -45,6 +45,6 @@ This document details the security principles, cryptographic safeguards, anti-ta
 
 ## 3. Financial Ledger Integrity & Audit Logging
 
-* **Double-Entry Ledger**: Every successful claim creates an immutable `WalletTransaction` recording `transactionId`, `userId`, `amount`, `currency`, `streakDay`, `referenceId`, `balanceBefore`, and `balanceAfter`.
+* **Transaction Ledger**: Every successful claim creates an immutable `WalletTransaction` recording `transactionId`, `userId`, `amount`, `currency`, `streakDay`, `referenceId`, `balanceBefore`, and `balanceAfter`.
 * **Security Audit Trail**: All security-relevant events (`STREAK_CLAIM_REQUEST`, `STREAK_CLAIM_SUCCESS`, `STREAK_CLAIM_REJECTED`, `STREAK_RESET`, `DUPLICATE_CLAIM`, `INVALID_CLAIM`) are recorded in the `AuditLog` collection.
 * **Error Sanitization**: Errors are sanitized via centralized middleware and `sanitizeApiError`, preventing raw MongoDB, Mongoose, or stack trace exposure.
