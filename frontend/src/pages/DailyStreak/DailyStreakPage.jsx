@@ -8,6 +8,7 @@ import WhyStreak from '../../components/WhyStreak/WhyStreak.jsx';
 import TrustFooter from '../../components/TrustFooter/TrustFooter.jsx';
 import StreakSkeleton from '../../components/StreakSkeleton/StreakSkeleton.jsx';
 import ClaimModal from '../../components/ClaimModal/ClaimModal.jsx';
+import StreakHistoryModal from '../../components/StreakHistoryModal/StreakHistoryModal.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import * as streakApi from '../../services/streakApi.js';
 import styles from './DailyStreak.module.css';
@@ -20,10 +21,24 @@ const DailyStreakPage = () => {
   const [isClaiming, setIsClaiming] = useState(false);
   const [feedback, setFeedback] = useState(null); // { type: 'success'|'error'|'reset', message: string }
 
-  // Modal State
+  // Modal States
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalClaimResult, setModalClaimResult] = useState(null);
   const [modalClaimError, setModalClaimError] = useState(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+
+  // Intentional Back Button Handler
+  const handleBack = () => {
+    if (window.history.length > 2 && document.referrer) {
+      window.history.back();
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setFeedback({
+        type: 'success',
+        message: 'You are on the Daily Streak Rewards dashboard. Check in daily to claim bigger rewards!'
+      });
+    }
+  };
 
   // Fetch complete backend streak state
   const loadStreak = useCallback(async (isSilent = false) => {
@@ -112,7 +127,7 @@ const DailyStreakPage = () => {
       <div className={styles.glowBackground} />
 
       {/* Top Navbar */}
-      <StreakHeader wallet={wallet} />
+      <StreakHeader wallet={wallet} onBack={handleBack} />
 
       <main className={styles.mainContent}>
         {/* Notification Banner */}
@@ -159,6 +174,7 @@ const DailyStreakPage = () => {
             <StreakStats
               streakData={streakData.streak}
               nextReward={streakData.nextReward}
+              onOpenCalendar={() => setIsHistoryModalOpen(true)}
             />
 
             {/* Ultimate Reward Banner */}
@@ -192,6 +208,12 @@ const DailyStreakPage = () => {
         onExecuteClaim={handleExecuteClaim}
         claimResult={modalClaimResult}
         claimError={modalClaimError}
+      />
+
+      {/* Streak History & Check-In Calendar Modal */}
+      <StreakHistoryModal
+        isOpen={isHistoryModalOpen}
+        onClose={() => setIsHistoryModalOpen(false)}
       />
     </div>
   );

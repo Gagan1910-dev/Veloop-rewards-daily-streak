@@ -2,14 +2,24 @@ import React from 'react';
 import { Calendar, Gift, CheckCircle2, Star, ChevronRight } from 'lucide-react';
 import styles from './StreakStats.module.css';
 
-const StreakStats = ({ streakData, nextReward }) => {
+const StreakStats = ({ streakData, nextReward, onOpenCalendar }) => {
   const currentStreak = streakData?.currentStreak ?? 0;
   const checkedIn = streakData?.checkedIn ?? 0;
   const totalRewards = streakData?.totalRewards ?? 7;
 
-  const nextRewardTitle = nextReward?.title && nextReward?.subtitle
-    ? `${nextReward.title} ${nextReward.subtitle}`
-    : nextReward?.title || '+10 VEs';
+  // Format Next Reward cleanly without duplicating numbers (e.g., "+10 VEs" instead of "+10 10 VEs")
+  const formatRewardDisplay = (reward) => {
+    if (!reward) return '+10 VEs';
+    const title = reward.title || '';
+    const subtitle = reward.subtitle || '';
+
+    if (subtitle.includes('VEs')) {
+      return `${title.startsWith('+') ? title : `+${title}`} VEs`;
+    }
+    return `${title} ${subtitle}`.trim() || '+10 VEs';
+  };
+
+  const nextRewardTitle = formatRewardDisplay(nextReward);
 
   return (
     <section className={styles.statsSection}>
@@ -23,11 +33,16 @@ const StreakStats = ({ streakData, nextReward }) => {
           <span>{currentStreak} Day Streak</span>
         </div>
 
-        <div className={styles.calendarLink}>
+        <button
+          type="button"
+          className={styles.calendarLink}
+          onClick={onOpenCalendar}
+          aria-label="Open Streak Calendar and Check-In History"
+        >
           <Calendar size={16} />
           <span>Streak Calendar</span>
           <ChevronRight size={14} />
-        </div>
+        </button>
       </div>
 
       <div className={styles.statsGrid}>

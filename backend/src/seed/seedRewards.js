@@ -135,28 +135,26 @@ export const seedRewards = async () => {
   }
 
   try {
-    console.log('[Seed] Connecting to MongoDB...');
-    await mongoose.connect(mongoUri);
-    console.log('[Seed] Connected. Seeding StreakReward configuration...');
+    if (mongoose.connection.readyState === 0) {
+      console.log('[Seed] Connecting to MongoDB...');
+      await mongoose.connect(mongoUri);
+      console.log('[Seed] Connected. Seeding StreakReward configuration...');
+    }
 
     for (const reward of DEFAULT_STREAK_REWARDS) {
       await StreakReward.findOneAndUpdate(
         { day: reward.day },
         { $set: reward },
-        { upsert: true, new: true, setDefaultsOnInsert: true }
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
       );
       console.log(`[Seed] Day ${reward.day} reward configured: ${reward.title} (${reward.subtitle})`);
     }
 
     const count = await StreakReward.countDocuments();
     console.log(`[Seed Success] Total ${count} streak rewards configured in database.`);
-    await mongoose.disconnect();
     return { success: true, count };
   } catch (error) {
     console.error(`[Seed Error] Failed to seed rewards: ${error.message}`);
-    if (mongoose.connection.readyState !== 0) {
-      await mongoose.disconnect();
-    }
     throw error;
   }
 };
@@ -164,7 +162,10 @@ export const seedRewards = async () => {
 // If executed directly via CLI: node src/seed/seedRewards.js
 if (process.argv[1] && process.argv[1].endsWith('seedRewards.js')) {
   seedRewards()
-    .then((result) => {
+    .then(async (result) => {
+      if (mongoose.connection.readyState !== 0) {
+        await mongoose.disconnect();
+      }
       if (result.success) {
         console.log('[Seed Completed Successfully]');
         process.exit(0);
@@ -172,8 +173,12 @@ if (process.argv[1] && process.argv[1].endsWith('seedRewards.js')) {
         process.exit(0);
       }
     })
-    .catch((err) => {
+    .catch(async (err) => {
       console.error('[Seed Process Exited with Error]', err);
+      if (mongoose.connection.readyState !== 0) {
+        await mongoose.disconnect();
+      }
       process.exit(1);
     });
 }
+

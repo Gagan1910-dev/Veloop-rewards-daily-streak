@@ -48,6 +48,12 @@ export const getOrCreateActiveCycle = async (userId, currentTime = new Date()) =
       const lastCycle = await StreakCycle.findOne({ userId }).sort({ cycleNumber: -1 });
       const nextCycleNumber = lastCycle ? lastCycle.cycleNumber + 1 : 1;
 
+      // If previous cycle was completed, the new cycle inherits the nextEligibleClaimAt cooldown from Day 7
+      let initialEligibleAt = now;
+      if (lastCycle && lastCycle.status === 'COMPLETED' && lastCycle.nextEligibleClaimAt) {
+        initialEligibleAt = lastCycle.nextEligibleClaimAt;
+      }
+
       activeCycle = await StreakCycle.findOneAndUpdate(
         { userId, status: 'ACTIVE' },
         {
@@ -59,7 +65,7 @@ export const getOrCreateActiveCycle = async (userId, currentTime = new Date()) =
             currentStreak: 0,
             lastClaimedDay: 0,
             lastClaimedAt: null,
-            nextEligibleClaimAt: now,
+            nextEligibleClaimAt: initialEligibleAt,
             claimWindowExpiresAt: null
           }
         },
@@ -138,10 +144,15 @@ export const getStreakStatus = async (userId, currentTime = new Date()) => {
   let nextClaimAt = null;
 
   if (lastClaimedDay === 0) {
-    // New cycle: Day 1 is actionable immediately
+    // New cycle: Day 1 is actionable if cooldown elapsed
     currentTargetDay = 1;
-    isClaimEligible = true;
-    nextClaimAt = null;
+    if (cycle.nextEligibleClaimAt && now < new Date(cycle.nextEligibleClaimAt)) {
+      isClaimEligible = false;
+      nextClaimAt = cycle.nextEligibleClaimAt.toISOString();
+    } else {
+      isClaimEligible = true;
+      nextClaimAt = null;
+    }
   } else if (lastClaimedDay < 7) {
     currentTargetDay = lastClaimedDay + 1;
     if (cycle.nextEligibleClaimAt && now >= new Date(cycle.nextEligibleClaimAt)) {
