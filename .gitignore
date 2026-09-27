@@ -22,9 +22,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Editor & OS
+# Editor, OS & IDE
 .vscode/
 .idea/
+.agents/
 *.suo
 *.ntvs*
 *.njsproj
