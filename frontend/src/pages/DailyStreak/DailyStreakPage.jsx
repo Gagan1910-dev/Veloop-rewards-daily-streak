@@ -14,7 +14,7 @@ import * as streakApi from '../../services/streakApi.js';
 import styles from './DailyStreak.module.css';
 
 const DailyStreakPage = () => {
-  const { user, wallet, token, register, login, updateWallet, isLoading: authLoading } = useAuth();
+  const { wallet, token, updateWallet } = useAuth();
 
   const [streakData, setStreakData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,16 +27,22 @@ const DailyStreakPage = () => {
   const [modalClaimError, setModalClaimError] = useState(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 
+  // Auto-dismiss notification feedback after 5 seconds
+  useEffect(() => {
+    if (feedback) {
+      const timer = setTimeout(() => {
+        setFeedback(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [feedback]);
+
   // Intentional Back Button Handler
   const handleBack = () => {
-    if (window.history.length > 2 && document.referrer) {
+    if (window.history.length > 1) {
       window.history.back();
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setFeedback({
-        type: 'success',
-        message: 'You are on the Daily Streak Rewards dashboard. Check in daily to claim bigger rewards!'
-      });
     }
   };
 
@@ -79,7 +85,7 @@ const DailyStreakPage = () => {
   };
 
   // Triggered by ClaimModal after CPA demo verification completes
-  const handleExecuteClaim = async () => {
+  const handleExecuteClaim = useCallback(async () => {
     if (isClaiming) return;
     setIsClaiming(true);
 
@@ -105,7 +111,7 @@ const DailyStreakPage = () => {
     } finally {
       setIsClaiming(false);
     }
-  };
+  }, [isClaiming, updateWallet, loadStreak]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -127,7 +133,10 @@ const DailyStreakPage = () => {
       <div className={styles.glowBackground} />
 
       {/* Top Navbar */}
-      <StreakHeader wallet={wallet} onBack={handleBack} />
+      <StreakHeader
+        wallet={wallet}
+        onBack={handleBack}
+      />
 
       <main className={styles.mainContent}>
         {/* Notification Banner */}

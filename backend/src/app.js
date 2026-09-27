@@ -2,12 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 import authRoutes from './routes/auth.routes.js';
 import streakRoutes from './routes/streak.routes.js';
+import { generalApiLimiter } from './middleware/rateLimiter.middleware.js';
 
 const app = express();
 
-import mongoose from 'mongoose';
+// Configure trust proxy for reverse-proxy deployment environments (Render, Vercel, Railway, Nginx)
+app.set('trust proxy', 1);
 
 // Security and utility middleware
 app.use(helmet());
@@ -18,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Foundation Health Check Endpoint
+// Foundation Health Check Endpoint (Exempt from Rate Limiting)
 const healthCheckHandler = (req, res) => {
   res.status(200).json({
     success: true,
@@ -32,6 +35,8 @@ const healthCheckHandler = (req, res) => {
 app.get('/health', healthCheckHandler);
 app.get('/api/health', healthCheckHandler);
 
+// Mount General Rate Limiter on all /api routes
+app.use('/api', generalApiLimiter);
 
 // API Routes
 app.use('/api/auth', authRoutes);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Clock, Gift, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
+import { X, Calendar, Clock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import * as streakApi from '../../services/streakApi.js';
 import styles from './StreakHistoryModal.module.css';
 

@@ -1,58 +1,281 @@
-.loaderContainer {
+.loaderBackdrop {
   min-height: 80vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1rem;
+  gap: 2rem;
+  user-select: none;
 }
 
-.flameWrapper {
+/* Ambient Radial Aura behind Crucible */
+.ambientGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.22) 0%,
+    rgba(245, 158, 11, 0.12) 40%,
+    rgba(10, 10, 20, 0) 70%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  animation: ambientBreath 4s ease-in-out infinite alternate;
+}
+
+/* Central Animation Container */
+.crucibleContainer {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 140px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.flameGlow {
+/* Outer Orbit Ring */
+.orbitRingOuter {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 136px;
+  height: 136px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, rgba(139, 92, 246, 0.2) 60%, transparent 80%);
-  animation: glowPulse 2s ease-in-out infinite;
+  border: 1.5px dashed rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), inset 0 0 15px rgba(139, 92, 246, 0.1);
+  animation: rotateClockwise 8s linear infinite;
 }
 
-.flameImg {
-  width: 60px;
-  height: 60px;
+/* Inner Counter Ring */
+.orbitRingInner {
+  position: absolute;
+  width: 102px;
+  height: 102px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
+  animation: rotateCounterClockwise 6s linear infinite;
+}
+
+/* Orbiting Nodes */
+.orbitNode {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.goldNode {
+  width: 12px;
+  height: 12px;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, #fde68a 0%, #f59e0b 80%);
+  color: #f59e0b;
+  box-shadow: 0 0 14px #f59e0b, 0 0 24px rgba(245, 158, 11, 0.6);
+}
+
+.emeraldNode {
+  width: 9px;
+  height: 9px;
+  bottom: -4.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, #a7f3d0 0%, #10b981 80%);
+  color: #10b981;
+  box-shadow: 0 0 12px #10b981, 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+.violetNode {
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, #ddd6fe 0%, #8b5cf6 80%);
+  color: #8b5cf6;
+  box-shadow: 0 0 14px #8b5cf6, 0 0 22px rgba(139, 92, 246, 0.7);
+}
+
+/* Core Glass Chamber */
+.coreChamber {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(27, 23, 49, 0.9) 70%,
+    rgba(14, 11, 28, 0.98) 100%
+  );
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(245, 158, 11, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.corePulseAura {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, rgba(139, 92, 246, 0.2) 60%, transparent 80%);
+  animation: corePulse 2.4s ease-in-out infinite;
+  z-index: 1;
+}
+
+.coreFlame {
+  width: 44px;
+  height: 44px;
   object-fit: contain;
-  filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.8));
-  animation: floatFlame 1.8s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.95)) drop-shadow(0 0 28px rgba(239, 68, 68, 0.5));
+  animation: flameLevitate 2s ease-in-out infinite alternate;
   z-index: 2;
 }
 
-@keyframes glowPulse {
-  0%, 100% { transform: scale(0.9); opacity: 0.6; }
-  50% { transform: scale(1.3); opacity: 1; }
+/* Shimmer Typography Section */
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  z-index: 10;
 }
 
-@keyframes floatFlame {
-  0% { transform: translateY(0px) scale(0.96); }
-  100% { transform: translateY(-8px) scale(1.04); }
-}
-
-.loadingText {
-  font-size: 1.15rem;
+.titleShimmer {
+  font-size: 1.25rem;
   font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #fef08a 25%,
+    #ffffff 50%,
+    #c4b5fd 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 3.5s linear infinite;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: blinkDot 1.4s ease-in-out infinite;
 }
 
 .subText {
-  font-size: 0.85rem;
-  color: #a78bfa;
+  font-size: 0.82rem;
+  color: #c4b5fd;
   font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Keyframe Animations */
+@keyframes rotateClockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+@keyframes flameLevitate {
+  0% { transform: translateY(2px) scale(0.95); }
+  100% { transform: translateY(-4px) scale(1.05); }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.9; }
+}
+
+@keyframes ambientBreath {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+}
+
+@keyframes textShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes blinkDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+/* Responsive Optimization */
+@media (max-width: 640px) {
+  .crucibleContainer {
+    width: 120px;
+    height: 120px;
+  }
+  .orbitRingOuter {
+    width: 116px;
+    height: 116px;
+  }
+  .orbitRingInner {
+    width: 88px;
+    height: 88px;
+  }
+  .coreChamber {
+    width: 62px;
+    height: 62px;
+  }
+  .coreFlame {
+    width: 38px;
+    height: 38px;
+  }
+  .titleShimmer {
+    font-size: 1.1rem;
+  }
+  .subText {
+    font-size: 0.78rem;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .orbitRingOuter,
+  .orbitRingInner,
+  .coreFlame,
+  .corePulseAura,
+  .ambientGlow,
+  .titleShimmer,
+  .pulseDot {
+    animation: none !important;
+  }
+  .titleShimmer {
+    -webkit-text-fill-color: #ffffff;
+  }
 }

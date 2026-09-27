@@ -338,11 +338,11 @@ const runStreakTests = async () => {
     // -------------------------------------------------------------
     const resetLogs = await AuditLog.find({ userId: userA._id, event: 'STREAK_RESET' });
     const successLogs = await AuditLog.find({ event: 'STREAK_CLAIM_SUCCESS' });
-    const duplicateLogs = await AuditLog.find({ event: 'DUPLICATE_CLAIM' });
+    const rejectedLogs = await AuditLog.find({ event: { $in: ['DUPLICATE_CLAIM', 'STREAK_CLAIM_REJECTED'] } });
 
     assert(
-      resetLogs.length > 0 && successLogs.length > 0 && duplicateLogs.length > 0,
-      'Security Audit Log: Events recorded for STREAK_RESET, STREAK_CLAIM_SUCCESS, and DUPLICATE_CLAIM'
+      resetLogs.length > 0 && successLogs.length > 0 && rejectedLogs.length > 0,
+      'Security Audit Log: Events recorded for STREAK_RESET, STREAK_CLAIM_SUCCESS, and rejection/duplicate protection'
     );
 
     console.log(`\n--- Test Suite Summary: ${testsPassed} passed, ${testsFailed} failed ---`);

@@ -34,8 +34,11 @@ apiClient.interceptors.response.use(
   (error) => {
     const sanitized = sanitizeApiError(error);
 
-    // If 401 Unauthorized, dispatch auth expired event or handle cleanly
-    if (sanitized.status === 401) {
+    // If 401 Unauthorized on protected routes, dispatch auth expired event
+    const url = error.config?.url || '';
+    const isAuthEndpoint = url.includes('/auth/login') || url.includes('/auth/register');
+
+    if (sanitized.status === 401 && !isAuthEndpoint) {
       // Clear token if corrupted or expired
       if (localStorage.getItem('veloop_auth_token')) {
         localStorage.removeItem('veloop_auth_token');

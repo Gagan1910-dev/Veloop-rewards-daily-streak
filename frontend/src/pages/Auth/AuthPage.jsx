@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Loader2, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
+import StreakLoader from '../../components/StreakLoader/StreakLoader.jsx';
 import styles from './AuthPage.module.css';
 
 const AuthPage = () => {
@@ -15,6 +16,7 @@ const AuthPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setFormError(null);
 
     if (mode === 'register' && (!name || name.trim().length < 2)) {
@@ -41,7 +43,11 @@ const AuthPage = () => {
         await register(name, email, password);
       }
     } catch (err) {
-      setFormError(err.message || 'Authentication failed. Please try again.');
+      if (mode === 'login' && (err.status === 401 || err.message?.toLowerCase().includes('invalid'))) {
+        setFormError('Invalid email or password. Please check your credentials or register first.');
+      } else {
+        setFormError(err.message || 'Authentication failed. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -57,6 +63,16 @@ const AuthPage = () => {
   return (
     <div className={styles.authPageContainer}>
       <div className={styles.glowOrb} />
+
+      {/* Premium VELoop Streak Loader Overlay during authenticating */}
+      {isSubmitting && (
+        <div className={styles.loadingOverlay} role="status" aria-live="polite">
+          <StreakLoader
+            message={mode === 'login' ? 'Signing in...' : 'Creating your account...'}
+            subMessage="Preparing your daily streak..."
+          />
+        </div>
+      )}
 
       <div className={styles.authCard}>
         <div className={styles.brandHeader}>

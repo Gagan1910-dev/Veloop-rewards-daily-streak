@@ -185,11 +185,41 @@
   color: #ffffff;
 }
 
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: overlayFadeIn 0.22s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 480px) {
   .authCard {
     padding: 1.75rem 1.25rem;
   }
   .brandTitle {
     font-size: 1.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingOverlay {
+    animation: none !important;
   }
 }

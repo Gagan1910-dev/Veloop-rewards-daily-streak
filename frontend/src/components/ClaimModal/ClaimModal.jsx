@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import CpaDemo from '../CpaDemo/CpaDemo.jsx';
@@ -16,15 +16,25 @@ const ClaimModal = ({
   const [progress, setProgress] = useState(0);
   const [stepLabel, setStepLabel] = useState('Preparing your reward...');
 
+  const onExecuteClaimRef = useRef(onExecuteClaim);
+  onExecuteClaimRef.current = onExecuteClaim;
+  const hasExecutedRef = useRef(false);
+
   useEffect(() => {
     if (!isOpen) {
       setStage('VERIFYING');
       setProgress(0);
       setStepLabel('Preparing your reward...');
+      hasExecutedRef.current = false;
       return;
     }
 
-    // Run CPA Demo Verification progression
+    hasExecutedRef.current = false;
+    setStage('VERIFYING');
+    setProgress(0);
+    setStepLabel('Preparing your reward...');
+
+    // Run CPA Demo Verification progression strictly once per open
     let current = 0;
     const interval = setInterval(() => {
       current += 5;
@@ -41,15 +51,16 @@ const ClaimModal = ({
       if (current >= 100) {
         clearInterval(interval);
         setStage('CLAIMING');
-        // Trigger server claim
-        if (typeof onExecuteClaim === 'function') {
-          onExecuteClaim();
+        // Trigger server claim strictly once
+        if (!hasExecutedRef.current && typeof onExecuteClaimRef.current === 'function') {
+          hasExecutedRef.current = true;
+          onExecuteClaimRef.current();
         }
       }
     }, 90);
 
     return () => clearInterval(interval);
-  }, [isOpen, onExecuteClaim]);
+  }, [isOpen]);
 
   // Transition to SUCCESS or ERROR when parent finishes claim
   useEffect(() => {

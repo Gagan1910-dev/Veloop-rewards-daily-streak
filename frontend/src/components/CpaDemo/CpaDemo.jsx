@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Sparkles } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import styles from './CpaDemo.module.css';
 
 const CpaDemo = ({ progress = 0, stepLabel = 'Preparing your reward...', targetDay = 1 }) => {

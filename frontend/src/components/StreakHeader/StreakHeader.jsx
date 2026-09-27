@@ -14,8 +14,9 @@ const StreakHeader = ({ wallet, onBack }) => {
         <button
           type="button"
           className={styles.backBtn}
-          onClick={onBack || (() => window.history.back())}
+          onClick={onBack}
           aria-label="Go Back"
+          title="Go Back"
         >
           <ArrowLeft size={20} />
         </button>
@@ -31,7 +32,7 @@ const StreakHeader = ({ wallet, onBack }) => {
 
       <div className={styles.rightSection}>
         {ves > 0 && (
-          <div className={styles.vesPill}>
+          <div className={styles.vesPill} title="VEs Balance">
             <img
               src="/assets/daily-streak/VEs_Coin.png"
               alt="VEs"
@@ -40,7 +41,7 @@ const StreakHeader = ({ wallet, onBack }) => {
             <span>+{ves} VEs</span>
           </div>
         )}
-        <div className={styles.balancePill}>
+        <div className={styles.balancePill} title="Gems Balance">
           <span className={styles.gemIcon}>💎</span>
           <span>{gems}</span>
         </div>

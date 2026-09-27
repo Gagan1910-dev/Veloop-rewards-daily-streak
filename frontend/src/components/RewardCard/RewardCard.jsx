@@ -42,9 +42,9 @@ const RewardCard = ({
 
   return (
     <div
-      className={`${styles.cardWrapper} ${isAvailable ? styles.cardAvailable : ''} ${
-        isClaimed ? styles.cardClaimed : ''
-      }`}
+      className={`${styles.cardWrapper} ${
+        isAvailable || isActionableToday ? styles.cardAvailable : ''
+      } ${isClaimed ? styles.cardClaimed : ''}`}
     >
       {/* Header with Day and Optional Badge */}
       <div className={styles.headerRow}>

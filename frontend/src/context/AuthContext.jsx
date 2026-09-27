@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }) => {
 
   // Register action
   const register = async (name, email, password) => {
-    setIsLoading(true);
     setError(null);
     try {
       const data = await authApi.register({ name, email, password });
@@ -65,14 +64,11 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       setError(err.message);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
   // Login action
   const login = async (email, password) => {
-    setIsLoading(true);
     setError(null);
     try {
       const data = await authApi.login({ email, password });
@@ -84,8 +80,6 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       setError(err.message);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
   };
 
