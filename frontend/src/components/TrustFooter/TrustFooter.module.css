@@ -1,7 +1,7 @@
 .footerContainer {
   width: 100%;
   max-width: 1200px;
-  margin: 2rem auto 2.5rem;
+  margin: 1rem auto 2rem;
   padding: 0 1rem;
 }
 
@@ -9,21 +9,17 @@
   background: linear-gradient(135deg, rgba(30, 24, 60, 0.7) 0%, rgba(18, 14, 38, 0.9) 100%);
   border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 16px;
-  padding: 1rem 1.5rem;
+  padding: 0.9rem 1.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  text-decoration: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .trustBar:hover {
-  border-color: rgba(139, 92, 246, 0.7);
-  background: linear-gradient(135deg, rgba(42, 32, 85, 0.85) 0%, rgba(26, 20, 56, 0.98) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, rgba(36, 28, 72, 0.8) 0%, rgba(22, 17, 46, 0.95) 100%);
 }
 
 .leftGroup {
@@ -42,36 +38,39 @@
   color: #34d399;
 }
 
-.arrowGroup {
-  display: flex;
+.badgePill {
+  display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-}
-
-.visitText {
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 9999px;
+  color: #34d399;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #c4b5fd;
-  transition: color 0.2s ease;
-}
-
-.trustBar:hover .visitText {
-  color: #ffffff;
+  flex-shrink: 0;
 }
 
 .brandBadge {
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ffd700, #f59e0b);
-  color: #000000;
-  font-weight: 900;
-  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
   flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.trustImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .textGroup {

@@ -21,14 +21,24 @@ const StreakSkeleton = () => {
         <div className={styles.heroArtworkSkeleton} />
       </div>
 
-      {/* 2. Stats Bar Skeleton */}
+      {/* 2. 7-Day Journey Track Skeleton */}
+      <div className={`${styles.shimmerBox} ${styles.journeySkeleton}`}>
+        <div className={`${styles.shimmerLine} ${styles.journeyHeaderSkeleton}`} />
+        <div className={styles.journeyTrackSkeletonRow}>
+          {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+            <div key={i} className={styles.journeyNodeSkeleton} />
+          ))}
+        </div>
+      </div>
+
+      {/* 3. Stats Bar Skeleton */}
       <div className={`${styles.shimmerBox} ${styles.statsBarSkeleton}`}>
         <div className={`${styles.shimmerPill} ${styles.statPillSkeleton}`} />
         <div className={`${styles.shimmerPill} ${styles.statPillSkeleton}`} />
         <div className={`${styles.shimmerPill} ${styles.statPillSkeleton}`} />
       </div>
 
-      {/* 3. Ultimate Reward Banner Skeleton */}
+      {/* 4. Ultimate Reward Banner Skeleton */}
       <div className={`${styles.shimmerBox} ${styles.ultimateBannerSkeleton}`}>
         <div className={styles.ultimateLeft}>
           <div className={styles.ultimateIconSkeleton} />

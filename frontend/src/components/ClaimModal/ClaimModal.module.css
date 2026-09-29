@@ -100,6 +100,28 @@
   align-items: center;
 }
 
+.successAssetWrapper {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successRewardImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6));
+  animation: rewardPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes rewardPop {
+  0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
 .rewardAmount {
   font-size: 2rem;
   font-weight: 900;

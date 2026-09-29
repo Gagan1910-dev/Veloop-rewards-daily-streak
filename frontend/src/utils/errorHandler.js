@@ -41,8 +41,15 @@ export const sanitizeApiError = (error) => {
         case 429:
           message = 'Too many requests. Please slow down.';
           break;
+        case 502:
+        case 503:
+        case 504:
+          message = 'VELoop servers are waking up or temporarily unavailable. Please try again in a moment.';
+          break;
         default:
-          message = 'Unable to process your request. Please try again later.';
+          message = status >= 500
+            ? 'VELoop server error. Please try again in a moment.'
+            : 'Unable to process your request. Please try again later.';
       }
     }
 
@@ -54,11 +61,29 @@ export const sanitizeApiError = (error) => {
     };
   }
 
-  // Network or connection error
+  // Check if browser is genuinely offline
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    return {
+      message: 'You appear to be offline. Please check your internet connection.',
+      code: 'OFFLINE',
+      status: 0
+    };
+  }
+
+  // Timeout error (e.g. Axios ECONNABORTED when cold starting)
+  if (error.code === 'ECONNABORTED' || error.message?.toLowerCase().includes('timeout')) {
+    return {
+      message: 'VELoop servers are waking up. Please try again in a moment.',
+      code: 'SERVER_WAKING_UP',
+      status: 0
+    };
+  }
+
+  // Network or connection error when request was made but no response received
   if (error.request) {
     return {
-      message: 'Network error. Unable to connect to VELoop servers. Please check your connection.',
-      code: 'NETWORK_ERROR',
+      message: 'VELoop servers are currently waking up or unreachable. Please try again in a moment.',
+      code: 'SERVER_UNAVAILABLE',
       status: 0
     };
   }

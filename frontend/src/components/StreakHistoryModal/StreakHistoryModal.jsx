@@ -120,34 +120,44 @@ const StreakHistoryModal = ({ isOpen, onClose }) => {
                   </span>
                 </div>
 
-                {history.map((item, idx) => (
-                  <div key={item.claimId || idx} className={styles.historyItem}>
-                    <div className={styles.itemLeft}>
-                      <div className={styles.dayPill}>Day {item.day}</div>
-                      <div className={styles.itemInfo}>
-                        <h4 className={styles.rewardTitle}>
-                          {item.reward?.title || `Day ${item.day}`}
-                          <span className={styles.rewardType}>
-                            {item.reward?.currency === 'INR' ? 'Amazon Gift Card' : 'VEs Coin'}
-                          </span>
-                        </h4>
-                        <div className={styles.metaRow}>
-                          <Clock size={12} />
-                          <span>{formatDate(item.claimedAt)}</span>
+                {history.map((item, idx) => {
+                  let itemAsset = '/assets/daily-streak/VEs_Coin.png';
+                  if (item.day === 4) itemAsset = '/assets/daily-streak/Day-4.png';
+                  else if (item.day === 5) itemAsset = '/assets/daily-streak/Day-5.png';
+                  else if (item.day === 7) itemAsset = '/assets/daily-streak/Day-7.png';
+
+                  return (
+                    <div key={item.claimId || idx} className={styles.historyItem}>
+                      <div className={styles.itemLeft}>
+                        <div className={styles.assetPillWrapper}>
+                          <img src={itemAsset} alt={`Day ${item.day}`} className={styles.itemAssetImg} />
+                          <span className={styles.dayPill}>Day {item.day}</span>
+                        </div>
+                        <div className={styles.itemInfo}>
+                          <h4 className={styles.rewardTitle}>
+                            {item.reward?.title || `Day ${item.day}`}
+                            <span className={styles.rewardType}>
+                              {item.reward?.currency === 'INR' ? 'Amazon Gift Card' : 'VEs Coin'}
+                            </span>
+                          </h4>
+                          <div className={styles.metaRow}>
+                            <Clock size={12} />
+                            <span>{formatDate(item.claimedAt)}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className={styles.itemRight}>
-                      <span className={styles.claimedPill}>✓ Claimed</span>
-                      {item.transactionId && (
-                        <span className={styles.refId}>
-                          Txn: {item.transactionId.slice(-8)}
-                        </span>
-                      )}
+                      <div className={styles.itemRight}>
+                        <span className={styles.claimedPill}>✓ Claimed</span>
+                        {item.transactionId && (
+                          <span className={styles.refId}>
+                            Txn: {item.transactionId.slice(-8)}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

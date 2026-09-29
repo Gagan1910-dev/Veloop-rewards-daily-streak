@@ -1,7 +1,7 @@
 .statsSection {
   width: 100%;
   max-width: 1200px;
-  margin: 1rem auto;
+  margin: 0.75rem auto;
   padding: 0 1rem;
 }
 
@@ -9,47 +9,236 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .streakBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(180, 83, 9, 0.4));
-  border: 1px solid rgba(245, 158, 11, 0.5);
-  padding: 0.5rem 1rem;
+  gap: 0.65rem;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(180, 83, 9, 0.45));
+  border: 1px solid rgba(245, 158, 11, 0.55);
+  padding: 0.45rem 1rem;
   border-radius: 9999px;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.streakBadgeContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.streakCountText {
   color: #fbbf24;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 0.95rem;
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+  line-height: 1.1;
+}
+
+.streakSubText {
+  color: rgba(253, 230, 138, 0.8);
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .flameSmall {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.7));
+  animation: flamePulse 2s infinite ease-in-out;
+}
+
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 
 .calendarLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  color: var(--accent-purple);
+  gap: 0.45rem;
+  color: #c4b5fd;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: color 0.2s ease;
-  background: rgba(139, 92, 246, 0.1);
-  padding: 0.45rem 0.9rem;
+  transition: all 0.2s ease;
+  background: rgba(139, 92, 246, 0.12);
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.35);
 }
 
 .calendarLink:hover {
-  color: #c4b5fd;
-  background: rgba(139, 92, 246, 0.2);
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.6);
+  transform: translateY(-1px);
+}
+
+/* 7-Day Visual Progress Journey Track */
+.journeyCard {
+  background: linear-gradient(135deg, rgba(24, 21, 48, 0.85), rgba(19, 16, 38, 0.95));
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 20px;
+  padding: 1.35rem 1.6rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.journeyHeader {
+  margin-bottom: 1rem;
+}
+
+.journeyTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.journeyTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.journeySubtitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.progressTrackOuter {
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressTrackFill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #fbbf24 100%);
+  border-radius: 9999px;
+  transition: width 0.5s ease-in-out;
+}
+
+.journeyNodesRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.6rem;
+  position: relative;
+}
+
+.journeyNodeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.nodeCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.25s ease;
+  margin-bottom: 0.45rem;
+}
+
+.nodeAssetImg {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.nodeCrownImg {
+  width: 38px;
+  height: 38px;
+}
+
+.nodeStatusBadge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+
+.nodeLockBadge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(30, 27, 75, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Completed Node State */
+.nodeCompleted .nodeCircle {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.18);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+.nodeCompleted .nodeDayLabel {
+  color: #34d399;
+  font-weight: 700;
+}
+
+/* Current Node State */
+.nodeCurrent .nodeCircle {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.28), rgba(139, 92, 246, 0.28));
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.55), inset 0 0 10px rgba(245, 158, 11, 0.25);
+  transform: scale(1.08);
+}
+
+.nodeCurrent .nodeDayLabel {
+  color: #fbbf24;
+  font-weight: 800;
+}
+
+/* Locked Node State */
+.nodeLocked .nodeCircle {
+  opacity: 0.68;
+}
+
+.nodeDayLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  line-height: 1.1;
+}
+
+.nodeTitleLabel {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 0.15rem;
 }
 
 .statsGrid {
@@ -140,5 +329,39 @@
   }
   .statValue {
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .journeyCard {
+    padding: 0.9rem 0.75rem;
+  }
+  .journeyNodesRow {
+    gap: 0.2rem;
+  }
+  .nodeCircle {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0.25rem;
+  }
+  .nodeAssetImg {
+    width: 22px;
+    height: 22px;
+  }
+  .nodeCrownImg {
+    width: 24px;
+    height: 24px;
+  }
+  .nodeDayLabel {
+    font-size: 0.62rem;
+  }
+  .nodeTitleLabel {
+    font-size: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flameSmall {
+    animation: none;
   }
 }

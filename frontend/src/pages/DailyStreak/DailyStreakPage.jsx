@@ -9,7 +9,7 @@ import TrustFooter from '../../components/TrustFooter/TrustFooter.jsx';
 import StreakSkeleton from '../../components/StreakSkeleton/StreakSkeleton.jsx';
 import ClaimModal from '../../components/ClaimModal/ClaimModal.jsx';
 import StreakHistoryModal from '../../components/StreakHistoryModal/StreakHistoryModal.jsx';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 import * as streakApi from '../../services/streakApi.js';
 import styles from './DailyStreak.module.css';
 
@@ -179,10 +179,11 @@ const DailyStreakPage = () => {
             {/* Hero Section */}
             <HeroBanner />
 
-            {/* Streak & Stats Section */}
+            {/* Streak & Stats Section with 7-Day Journey Track */}
             <StreakStats
               streakData={streakData.streak}
               nextReward={streakData.nextReward}
+              rewards={streakData.rewards}
               onOpenCalendar={() => setIsHistoryModalOpen(true)}
             />
 

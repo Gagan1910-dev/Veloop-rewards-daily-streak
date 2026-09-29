@@ -1,5 +1,6 @@
 import React from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
+import { useAuth } from './hooks/useAuth.js';
 import DailyStreakPage from './pages/DailyStreak/DailyStreakPage.jsx';
 import AuthPage from './pages/Auth/AuthPage.jsx';
 import StreakLoader from './components/StreakLoader/StreakLoader.jsx';

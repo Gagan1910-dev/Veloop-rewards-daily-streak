@@ -1,7 +1,7 @@
 .ultimateSection {
   width: 100%;
   max-width: 1200px;
-  margin: 1.25rem auto 1rem;
+  margin: 0.75rem auto 1rem;
   padding: 0 1rem;
 }
 
@@ -36,6 +36,13 @@
   z-index: 2;
 }
 
+.crownContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .crownImg {
   width: 80px;
   height: 80px;
@@ -44,9 +51,29 @@
   animation: crownGlow 3s ease-in-out infinite alternate;
 }
 
+.vipBadge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  color: #1a0826;
+  font-size: 0.68rem;
+  font-weight: 900;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  letter-spacing: 0.05em;
+}
+
 @keyframes crownGlow {
   0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5)); }
   100% { transform: scale(1.05) translateY(-3px); filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.85)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crownImg {
+    animation: none;
+  }
 }
 
 .rewardDetails {

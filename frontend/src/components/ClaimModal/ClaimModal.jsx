@@ -118,40 +118,51 @@ const ClaimModal = ({
           )}
 
           {/* Stage 3: Success View */}
-          {stage === 'SUCCESS' && (
-            <div className={styles.successContainer}>
-              <div className={styles.successIconWrapper}>
-                <CheckCircle2 size={38} />
-              </div>
+          {stage === 'SUCCESS' && (() => {
+            const dayNum = claimResult?.claim?.day || targetDay;
+            let successAsset = '/assets/daily-streak/VEs_Coin.png';
+            if (dayNum === 4) successAsset = '/assets/daily-streak/Day-4.png';
+            else if (dayNum === 5) successAsset = '/assets/daily-streak/Day-5.png';
+            else if (dayNum === 7) successAsset = '/assets/daily-streak/Day-7.png';
 
-              <h3 className={styles.successTitle}>Reward Claimed!</h3>
-              <p className={styles.successSubtitle}>
-                Day {claimResult?.claim?.day || targetDay} reward has been credited to your wallet.
-              </p>
+            return (
+              <div className={styles.successContainer}>
+                <div className={styles.successIconWrapper}>
+                  <CheckCircle2 size={38} />
+                </div>
 
-              <div className={styles.rewardHighlightCard}>
-                <span className={styles.rewardAmount}>
-                  {claimResult?.claim?.reward?.title || `Day ${targetDay}`}
-                </span>
-                <span className={styles.rewardDetailsText}>
-                  {claimResult?.claim?.reward?.subtitle || 'Daily Check-In Reward'}
-                </span>
-                {claimResult?.claim?.referenceId && (
-                  <span className={styles.txnMeta}>
-                    Ref: {claimResult.claim.referenceId}
+                <h3 className={styles.successTitle}>Reward Unlocked!</h3>
+                <p className={styles.successSubtitle}>
+                  Day {dayNum} reward has been credited to your VELoop wallet.
+                </p>
+
+                <div className={styles.rewardHighlightCard}>
+                  <div className={styles.successAssetWrapper}>
+                    <img src={successAsset} alt="Reward Visual" className={styles.successRewardImg} />
+                  </div>
+                  <span className={styles.rewardAmount}>
+                    {claimResult?.claim?.reward?.title || `Day ${targetDay}`}
                   </span>
-                )}
-              </div>
+                  <span className={styles.rewardDetailsText}>
+                    {claimResult?.claim?.reward?.subtitle || 'Daily Check-In Reward'}
+                  </span>
+                  {claimResult?.claim?.referenceId && (
+                    <span className={styles.txnMeta}>
+                      Ledger Ref: {claimResult.claim.referenceId}
+                    </span>
+                  )}
+                </div>
 
-              <button
-                type="button"
-                className={styles.actionBtn}
-                onClick={onClose}
-              >
-                Collect & Continue
-              </button>
-            </div>
-          )}
+                <button
+                  type="button"
+                  className={styles.actionBtn}
+                  onClick={onClose}
+                >
+                  Collect & Continue
+                </button>
+              </div>
+            );
+          })()}
 
           {/* Stage 4: Error View */}
           {stage === 'ERROR' && (

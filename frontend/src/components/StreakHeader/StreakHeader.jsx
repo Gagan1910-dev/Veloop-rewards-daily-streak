@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, LogOut, User } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 import styles from './StreakHeader.module.css';
 
 const StreakHeader = ({ wallet, onBack }) => {
@@ -31,16 +31,17 @@ const StreakHeader = ({ wallet, onBack }) => {
       </div>
 
       <div className={styles.rightSection}>
-        {ves > 0 && (
-          <div className={styles.vesPill} title="VEs Balance">
-            <img
-              src="/assets/daily-streak/VEs_Coin.png"
-              alt="VEs"
-              className={styles.vesCoinSmall}
-            />
-            <span>+{ves} VEs</span>
-          </div>
-        )}
+        {/* Always display VEs Coin balance with official asset */}
+        <div className={styles.vesPill} title="VEs Balance">
+          <img
+            src="/assets/daily-streak/VEs_Coin.png"
+            alt="VEs Coin"
+            className={styles.vesCoinSmall}
+          />
+          <span>{ves} VEs</span>
+        </div>
+
+        {/* Gems Balance */}
         <div className={styles.balancePill} title="Gems Balance">
           <span className={styles.gemIcon}>💎</span>
           <span>{gems}</span>

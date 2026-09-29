@@ -6,11 +6,15 @@ const HeroBanner = () => {
     <section className={styles.heroSection}>
       <div className={styles.heroCard}>
         <div className={styles.textContent}>
+          <div className={styles.categoryBadge}>
+            <span className={styles.badgeSparkle}>✦</span>
+            <span>Your Daily Streak</span>
+          </div>
           <h2 className={styles.heading}>
-            Login Daily & Earn <span className={styles.highlightText}>Bigger Rewards!</span>
+            Login Daily & Unlock <span className={styles.highlightText}>Bigger Rewards!</span>
           </h2>
           <p className={styles.subheading}>
-            Maintain your streak and unlock exciting rewards every day.
+            Check in every consecutive day to claim VEs coins and unlock official Amazon Gift Cards.
           </p>
         </div>
 

@@ -1,6 +1,15 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dns from 'node:dns';
+
+// Fix local ISP SRV lookup failures (ESERVFAIL) by resolving via public Google & Cloudflare DNS
+try {
+  dns.setDefaultResultOrder('ipv4first');
+  dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+} catch {
+  // Ignore in environments where setting DNS servers is restricted
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

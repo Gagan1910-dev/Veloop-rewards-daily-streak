@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import * as authApi from '../services/authApi.js';
 
 const AuthContext = createContext(null);
@@ -38,6 +38,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    // Non-blocking fire-and-forget backend warmup request to wake sleeping Render instance
+    authApi.warmupBackend();
+
     restoreSession();
 
     // Listen to global logout event triggered on 401 response
@@ -131,12 +134,5 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
+export { AuthContext };
 export default AuthContext;

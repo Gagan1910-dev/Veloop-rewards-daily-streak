@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Loader2, ArrowRight, Sparkles } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 import StreakLoader from '../../components/StreakLoader/StreakLoader.jsx';
 import styles from './AuthPage.module.css';
 
@@ -13,6 +13,21 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loadingStage, setLoadingStage] = useState('initial'); // 'initial' | 'waking'
+
+  // Adaptive loader messaging if request takes longer (e.g. Render cold start)
+  useEffect(() => {
+    if (!isSubmitting) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setLoadingStage('waking');
+    }, 3500);
+    return () => {
+      clearTimeout(timer);
+      setLoadingStage('initial');
+    };
+  }, [isSubmitting]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,8 +58,14 @@ const AuthPage = () => {
         await register(name, email, password);
       }
     } catch (err) {
-      if (mode === 'login' && (err.status === 401 || err.message?.toLowerCase().includes('invalid'))) {
+      if (err.status === 401) {
         setFormError('Invalid email or password. Please check your credentials or register first.');
+      } else if (err.status === 409) {
+        setFormError(err.message || 'An account with this email already exists.');
+      } else if (err.code === 'OFFLINE') {
+        setFormError('You appear to be offline. Please check your internet connection.');
+      } else if (err.code === 'SERVER_WAKING_UP' || err.code === 'SERVER_UNAVAILABLE') {
+        setFormError('VELoop servers are waking up. Please try again in a moment.');
       } else {
         setFormError(err.message || 'Authentication failed. Please try again.');
       }
@@ -68,8 +89,16 @@ const AuthPage = () => {
       {isSubmitting && (
         <div className={styles.loadingOverlay} role="status" aria-live="polite">
           <StreakLoader
-            message={mode === 'login' ? 'Signing in...' : 'Creating your account...'}
-            subMessage="Preparing your daily streak..."
+            message={
+              loadingStage === 'waking'
+                ? 'VELoop servers are waking up...'
+                : (mode === 'login' ? 'Signing in...' : 'Creating your account...')
+            }
+            subMessage={
+              loadingStage === 'waking'
+                ? 'Just a moment while we connect you.'
+                : 'Preparing your daily streak...'
+            }
           />
         </div>
       )}

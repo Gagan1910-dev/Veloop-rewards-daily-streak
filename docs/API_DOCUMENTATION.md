@@ -36,7 +36,7 @@ Comprehensive API documentation for the VELoop Rewards Daily Streak & Authentica
 * **Method**: `POST`
 * **Path**: `/api/auth/register`
 * **Auth Required**: No
-* **Description**: Registers a new user account, salts/hashes password with bcrypt, initializes a clean zero-balance Wallet (`vesBalance: 0`, `gemsBalance: 0`, `giftCardBalanceINR: 0`), and issues a signed JWT.
+* **Description**: Registers a new user account, salts/hashes password with bcrypt, initializes a clean zero-balance Wallet (`vesBalance: 0`, `amazonGiftCardsTotal: 0`, `giftCardBalanceINR: 0`), and issues a signed JWT.
 
 **Request Body**:
 ```json
@@ -62,7 +62,7 @@ Comprehensive API documentation for the VELoop Rewards Daily Streak & Authentica
     },
     "wallet": {
       "vesBalance": 0,
-      "gemsBalance": 0,
+      "amazonGiftCardsTotal": 0,
       "giftCardBalanceINR": 0,
       "currency": "VES"
     },
@@ -106,7 +106,7 @@ Comprehensive API documentation for the VELoop Rewards Daily Streak & Authentica
     },
     "wallet": {
       "vesBalance": 0,
-      "gemsBalance": 0,
+      "amazonGiftCardsTotal": 0,
       "giftCardBalanceINR": 0,
       "currency": "VES"
     },
@@ -140,7 +140,7 @@ Comprehensive API documentation for the VELoop Rewards Daily Streak & Authentica
     },
     "wallet": {
       "vesBalance": 15,
-      "gemsBalance": 0,
+      "amazonGiftCardsTotal": 0,
       "giftCardBalanceINR": 0,
       "currency": "VES"
     }
@@ -279,7 +279,7 @@ Comprehensive API documentation for the VELoop Rewards Daily Streak & Authentica
   },
   "wallet": {
     "vesBalance": 5,
-    "gemsBalance": 0,
+    "amazonGiftCardsTotal": 0,
     "giftCardBalanceINR": 0,
     "currency": "VES"
   }

@@ -28,3 +28,17 @@ export const getMe = async () => {
   const res = await apiClient.get('/auth/me');
   return res.data;
 };
+
+/**
+ * Lightweight non-blocking warmup request to wake sleeping Render instance
+ * @returns {Promise<Object|null>}
+ */
+export const warmupBackend = async () => {
+  try {
+    const res = await apiClient.get('/health', { timeout: 45000 });
+    return res;
+  } catch {
+    // Fire-and-forget: silently ignore warmup errors
+    return null;
+  }
+};
