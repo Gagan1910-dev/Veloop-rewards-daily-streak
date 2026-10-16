@@ -1,6 +1,6 @@
 /**
  * Format and sanitize API error responses
- * Prevents raw Mongo/Axios/CastError internals from reaching the UI
+ * Strictly prevents raw Mongo/Axios/CastError internals from reaching the UI
  * @param {Error|Object} error
  * @returns {Object} { message: string, code: string|null, status: number }
  */
@@ -21,34 +21,41 @@ export const sanitizeApiError = (error) => {
     let message = data.message;
     const code = data.code || null;
 
-    if (!message) {
+    // Detect and scrub any internal infrastructure leaks from the message
+    const hasInternalLeak =
+      typeof message === 'string' &&
+      /buffering|users\.find|mongodb|mongoose|collection|replica|shard|timeout after|econnrefused|topology/i.test(
+        message
+      );
+
+    if (!message || hasInternalLeak) {
       switch (status) {
         case 400:
-          message = 'Invalid request. Please check your data.';
+          message = 'Invalid request. Please check your details and try again.';
           break;
         case 401:
-          message = 'Authentication required. Please log in to continue.';
+          message = 'Invalid email or password. Please check your credentials or register first.';
           break;
         case 403:
           message = 'Access denied. You do not have permission for this action.';
           break;
         case 404:
-          message = 'Requested resource not found.';
+          message = 'Requested service or resource not found.';
           break;
         case 409:
-          message = 'Conflict. This action or resource already exists.';
+          message = 'Conflict. This record or claim has already been processed.';
           break;
         case 429:
-          message = 'Too many requests. Please slow down.';
+          message = 'Too many requests. Please wait a moment before trying again.';
           break;
         case 502:
         case 503:
         case 504:
-          message = 'VELoop servers are waking up or temporarily unavailable. Please try again in a moment.';
+          message = "We're having trouble connecting right now. Please try again shortly.";
           break;
         default:
           message = status >= 500
-            ? 'VELoop server error. Please try again in a moment.'
+            ? "We're having trouble connecting right now. Please try again shortly."
             : 'Unable to process your request. Please try again later.';
       }
     }
@@ -82,14 +89,21 @@ export const sanitizeApiError = (error) => {
   // Network or connection error when request was made but no response received
   if (error.request) {
     return {
-      message: 'VELoop servers are currently waking up or unreachable. Please try again in a moment.',
+      message: "We're having trouble connecting right now. Please try again shortly.",
       code: 'SERVER_UNAVAILABLE',
       status: 0
     };
   }
 
+  // Fallback sanitized client error
+  const safeMessage =
+    typeof error.message === 'string' &&
+    !/buffering|mongodb|mongoose|collection/i.test(error.message)
+      ? error.message
+      : "We're having trouble connecting right now. Please try again shortly.";
+
   return {
-    message: error.message || 'Something went wrong.',
+    message: safeMessage,
     code: 'CLIENT_ERROR',
     status: 500
   };

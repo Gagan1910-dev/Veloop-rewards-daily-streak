@@ -68,7 +68,7 @@ const runFullIntegrationAudit = async () => {
   };
 
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/veloop_test';
+    const mongoUri = process.env.TEST_MONGO_URI || 'mongodb://localhost:27017/veloop_test';
     await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 3000 });
 
     try {

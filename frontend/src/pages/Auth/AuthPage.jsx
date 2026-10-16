@@ -66,6 +66,8 @@ const AuthPage = () => {
         setFormError('You appear to be offline. Please check your internet connection.');
       } else if (err.code === 'SERVER_WAKING_UP' || err.code === 'SERVER_UNAVAILABLE') {
         setFormError('VELoop servers are waking up. Please try again in a moment.');
+      } else if (err.status === 503 || err.code === 'DATABASE_UNAVAILABLE') {
+        setFormError("We're having trouble connecting right now. Please try again shortly.");
       } else {
         setFormError(err.message || 'Authentication failed. Please try again.');
       }
@@ -75,6 +77,7 @@ const AuthPage = () => {
   };
 
   const handleFillDemo = () => {
+    setMode('login');
     setEmail('intern.demo@velooprewards.in');
     setPassword('DemoPassword123!');
     setName('Demo Intern');

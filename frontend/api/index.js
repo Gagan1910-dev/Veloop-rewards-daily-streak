@@ -11,6 +11,9 @@ try {
   // Safe fallback
 }
 
+// Disable query buffering so operations fail fast when disconnected
+mongoose.set('bufferCommands', false);
+
 const MONGO_URI =
   process.env.MONGO_URI ||
   'mongodb+srv://gagan:12345@cluster0.oihtr6g.mongodb.net/veloop_rewards?retryWrites=true&w=majority&appName=Cluster0';
@@ -27,7 +30,9 @@ async function ensureDbConnected() {
   }
   await mongoose.connect(MONGO_URI, {
     serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 30000
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 30000,
+    maxPoolSize: 5
   });
   isConnected = true;
   console.log('[Vercel API] MongoDB Atlas connected successfully');
@@ -42,10 +47,12 @@ export default async function handler(req, res) {
   try {
     await ensureDbConnected();
   } catch (err) {
+    // Safe technical logging on server for observability
     console.error('[Vercel API] Database connection error:', err.message);
     return res.status(503).json({
       success: false,
-      message: 'MongoDB Atlas connection timeout. Please ensure 0.0.0.0/0 is whitelisted in your MongoDB Atlas Network Access.'
+      code: 'SERVICE_UNAVAILABLE',
+      message: "We're having trouble connecting right now. Please try again shortly."
     });
   }
   return app(req, res);

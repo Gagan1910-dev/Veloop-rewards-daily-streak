@@ -12,7 +12,8 @@
     "test:streak": "node src/tests/streak.test.js",
     "test:audit": "node src/tests/e2e_full_audit.test.js",
     "test:ratelimit": "node src/tests/rate_limit.test.js",
-    "test": "node src/tests/auth.test.js && node src/tests/streak.test.js && node src/tests/e2e_full_audit.test.js && node src/tests/rate_limit.test.js"
+    "test:reliability": "node src/tests/reliability_audit.test.js",
+    "test": "node src/tests/auth.test.js && node src/tests/streak.test.js && node src/tests/e2e_full_audit.test.js && node src/tests/rate_limit.test.js && node src/tests/reliability_audit.test.js"
   },
   "keywords": [
     "mern",
