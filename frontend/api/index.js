@@ -44,6 +44,16 @@ async function ensureDbConnected() {
 }
 
 export default async function handler(req, res) {
+  // Liveness Probe: always returns 200 if serverless function executes
+  if (req.url === '/health' || req.url === '/api/health/live') {
+    return res.status(200).json({
+      success: true,
+      status: 'online',
+      service: 'VELoop Rewards API (Vercel)',
+      serverTime: new Date().toISOString()
+    });
+  }
+
   try {
     await ensureDbConnected();
   } catch (err) {
