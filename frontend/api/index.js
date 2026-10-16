@@ -25,26 +25,28 @@ async function ensureDbConnected() {
   if (mongoose.connection.readyState === 1) {
     return;
   }
-  if (!isConnected) {
-    try {
-      await mongoose.connect(MONGO_URI, {
-        serverSelectionTimeoutMS: 10000,
-        socketTimeoutMS: 45000
-      });
-      isConnected = true;
-      console.log('[Vercel API] MongoDB Atlas connected successfully');
-      try {
-        await seedRewards();
-      } catch (seedErr) {
-        console.warn('[Vercel API] Seed check completed:', seedErr.message);
-      }
-    } catch (err) {
-      console.error('[Vercel API] MongoDB Connection failed:', err.message);
-    }
+  await mongoose.connect(MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 30000
+  });
+  isConnected = true;
+  console.log('[Vercel API] MongoDB Atlas connected successfully');
+  try {
+    await seedRewards();
+  } catch (seedErr) {
+    console.warn('[Vercel API] Seed check completed:', seedErr.message);
   }
 }
 
 export default async function handler(req, res) {
-  await ensureDbConnected();
+  try {
+    await ensureDbConnected();
+  } catch (err) {
+    console.error('[Vercel API] Database connection error:', err.message);
+    return res.status(503).json({
+      success: false,
+      message: 'MongoDB Atlas connection timeout. Please ensure 0.0.0.0/0 is whitelisted in your MongoDB Atlas Network Access.'
+    });
+  }
   return app(req, res);
 }

@@ -2,7 +2,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import StreakReward from '../models/StreakReward.js';
+import User from '../models/User.js';
+import Wallet from '../models/Wallet.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -152,6 +155,30 @@ export const seedRewards = async () => {
 
     const count = await StreakReward.countDocuments();
     console.log(`[Seed Success] Total ${count} streak rewards configured in database.`);
+
+    // Seed Evaluator Demo User if not exists
+    const DEMO_EMAIL = 'intern.demo@velooprewards.in';
+    const existingDemo = await User.findOne({ email: DEMO_EMAIL });
+    if (!existingDemo) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('DemoPassword123!', salt);
+      const demoUser = await User.create({
+        name: 'Demo Intern',
+        email: DEMO_EMAIL,
+        password: hashedPassword,
+        role: 'user',
+        isActive: true
+      });
+      await Wallet.create({
+        userId: demoUser._id,
+        vesBalance: 0,
+        gemsBalance: 0,
+        giftCardBalanceINR: 0,
+        currency: 'VES'
+      });
+      console.log('[Seed Success] Evaluator demo user intern.demo@velooprewards.in created successfully.');
+    }
+
     return { success: true, count };
   } catch (error) {
     console.error(`[Seed Error] Failed to seed rewards: ${error.message}`);
