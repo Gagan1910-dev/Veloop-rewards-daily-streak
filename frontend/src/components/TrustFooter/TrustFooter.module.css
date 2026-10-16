@@ -1,113 +1,107 @@
 .footerContainer {
   width: 100%;
-  max-width: 1200px;
-  margin: 1rem auto 2rem;
+  max-width: 1240px;
+  margin: 1.25rem auto 2.5rem;
   padding: 0 1rem;
 }
 
 .trustBar {
-  background: linear-gradient(135deg, rgba(30, 24, 60, 0.7) 0%, rgba(18, 14, 38, 0.9) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 16px;
-  padding: 0.9rem 1.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem 1.4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  justify-content: center;
+  transition: all 0.25s ease;
 }
 
 .trustBar:hover {
-  border-color: rgba(139, 92, 246, 0.5);
-  background: linear-gradient(135deg, rgba(36, 28, 72, 0.8) 0%, rgba(22, 17, 46, 0.95) 100%);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(139, 92, 246, 0.3);
 }
 
 .leftGroup {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
-.titleRow {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.verifiedIcon {
-  color: #34d399;
-}
-
-.badgePill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.8rem;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 9999px;
-  color: #34d399;
-  font-size: 0.8rem;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.brandBadge {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.vrBadgeCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
   flex-shrink: 0;
-  overflow: hidden;
-  padding: 4px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.trustImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.vrText {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.04em;
 }
 
 .textGroup {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  color: #cbd5e1;
 }
 
 .officialTitle {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.tagline {
-  font-size: 0.8rem;
-  color: #a78bfa;
   font-weight: 600;
 }
 
-.arrowIcon {
+.goldDomain {
+  color: #fbbf24;
+  font-weight: 800;
+}
+
+.dividerPipe {
+  color: rgba(255, 255, 255, 0.25);
+  margin: 0 0.35rem;
+}
+
+.tagline {
   color: #94a3b8;
-  transition: transform 0.2s ease;
+  font-weight: 500;
 }
 
-.trustBar:hover .arrowIcon {
-  transform: translateX(4px);
-  color: #ffffff;
+.mobileArrow {
+  display: none;
+  color: #94a3b8;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .trustBar {
-    padding: 0.85rem 1rem;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
   }
-  .officialTitle {
-    font-size: 0.85rem;
+
+  .textGroup {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    font-size: 0.78rem;
   }
+
+  .dividerPipe {
+    display: none;
+  }
+
   .tagline {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    color: #a78bfa;
+  }
+
+  .mobileArrow {
+    display: flex;
+    align-items: center;
   }
 }

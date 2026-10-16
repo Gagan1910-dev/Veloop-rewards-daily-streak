@@ -1,33 +1,53 @@
 .cardWrapper {
-  background: linear-gradient(180deg, #191632 0%, #121024 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #181335 0%, #0d0922 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
-  padding: 1rem 0.85rem;
+  padding: 0.85rem 0.6rem 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   position: relative;
-  transition: all 0.25s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 272px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  perspective: 800px;
+  transform-style: preserve-3d;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease;
 }
 
 .cardWrapper:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  transform: perspective(800px) translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7), 0 0 20px rgba(139, 92, 246, 0.3);
+  border-color: rgba(167, 139, 250, 0.5);
 }
 
-/* Today / Available state with glowing golden border */
+/* Day 7 Permanent VIP Styling with Radiant Gold Outline */
+.cardDay7Vip {
+  border: 1.5px solid #fbbf24;
+  background: linear-gradient(180deg, #261a44 0%, #140d2e 100%);
+  box-shadow: 0 0 26px rgba(251, 191, 36, 0.38), 0 12px 28px rgba(0, 0, 0, 0.6), inset 0 0 14px rgba(251, 191, 36, 0.14);
+}
+
+.cardDay7Vip:hover {
+  border-color: #ffd700;
+  box-shadow: 0 0 34px rgba(255, 215, 0, 0.55), 0 16px 36px rgba(0, 0, 0, 0.75);
+}
+
+/* Today / Available state with Glowing Golden Border & Amber Sheen */
 .cardAvailable {
-  background: linear-gradient(180deg, #271e42 0%, #1b1335 100%);
-  border: 1.5px solid #f59e0b;
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35), 0 10px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, #2c1e4c 0%, #180f36 100%);
+  border: 1.5px solid #fbbf24;
+  box-shadow: 0 0 28px rgba(251, 191, 36, 0.48), 0 12px 28px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(251, 191, 36, 0.18);
 }
 
-/* Claimed state with subtle emerald border */
+/* Claimed state with subtle Emerald Border */
 .cardClaimed {
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  background: linear-gradient(180deg, #131c26 0%, #0f161f 100%);
+  border: 1px solid rgba(16, 185, 129, 0.48);
+  background: linear-gradient(180deg, #101e24 0%, #0a1418 100%);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 14px rgba(16, 185, 129, 0.18);
 }
 
 /* Day Header & Badge */
@@ -36,139 +56,252 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
+  padding: 0 0.15rem;
+  box-sizing: border-box;
 }
 
 .dayNumber {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: #cbd5e1;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  padding: 0.14rem 0.6rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.headerClaimedCheck {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #042f1a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  flex-shrink: 0;
 }
 
 .badgePill {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  padding: 0.15rem 0.5rem;
+  padding: 0.14rem 0.5rem;
   border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badgeToday {
-  background: #f59e0b;
-  color: #000000;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  background: #fbbf24;
+  color: #1c1917;
+  font-weight: 900;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.65);
 }
 
 .badgeGift {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.35);
   color: #c4b5fd;
-  border: 1px solid rgba(139, 92, 246, 0.5);
+  border: 1px solid rgba(139, 92, 246, 0.6);
 }
 
 .badgeCoin {
-  background: rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.28);
   color: #93c5fd;
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.5);
 }
 
 .badgeVip {
-  background: linear-gradient(135deg, #ffd700, #ff8c00);
-  color: #000000;
+  background: linear-gradient(135deg, #ffd700 0%, #f59e0b 100%);
+  color: #1c1917;
   font-weight: 900;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.7);
 }
 
-/* Artwork Asset Container */
+/* Artwork Asset Container - Enlarged, Proud & Centered */
 .assetContainer {
   width: 100%;
-  height: 75px;
+  height: 114px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .rewardAsset {
-  max-width: 68px;
-  max-height: 68px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
-  transition: transform 0.25s ease;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .cardWrapper:hover .rewardAsset {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
-/* Reward Titles */
+/* Specialized Proportional Sizing Per Asset Type */
+.assetAmazonCard {
+  width: 124px;
+  height: 80px;
+  max-width: 94%;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 14px rgba(251, 191, 36, 0.3));
+}
+
+.assetCrown {
+  width: 112px;
+  height: 112px;
+  max-width: 94%;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(251, 191, 36, 0.45));
+}
+
+.assetGiftbox {
+  width: 105px;
+  height: 105px;
+  max-width: 92%;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 16px rgba(139, 92, 246, 0.35));
+}
+
+.assetCoinXs {
+  width: 94px;
+  height: 94px;
+  max-width: 90%;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 14px rgba(251, 191, 36, 0.35));
+}
+
+.assetCoinSm {
+  width: 98px;
+  height: 98px;
+  max-width: 90%;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 14px rgba(251, 191, 36, 0.35));
+}
+
+.assetCoinMd {
+  width: 102px;
+  height: 102px;
+  max-width: 92%;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 16px rgba(251, 191, 36, 0.4));
+}
+
+.assetCoinLg {
+  width: 106px;
+  height: 106px;
+  max-width: 94%;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 18px rgba(251, 191, 36, 0.45));
+}
+
+/* Reward Titles & Values Matching Official Reference Contrast */
 .rewardTypeLabel {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 0.15rem;
+  color: #94a3b8;
+  margin-bottom: 0.08rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .amountTitle {
   font-size: 1.4rem;
   font-weight: 900;
-  color: #ffffff;
-  line-height: 1.1;
-  margin-bottom: 0.15rem;
+  line-height: 1.15;
+  margin-bottom: 0.08rem;
+  letter-spacing: -0.02em;
 }
 
+/* Color Accents Exactly Matching Reference Design */
 .amountGreen {
   color: #34d399;
+  text-shadow: 0 0 14px rgba(52, 211, 153, 0.35);
 }
 
 .amountGold {
   color: #fbbf24;
+  text-shadow: 0 0 14px rgba(251, 191, 36, 0.4);
+}
+
+.amountViolet {
+  color: #c084fc;
+  text-shadow: 0 0 14px rgba(192, 132, 252, 0.35);
+}
+
+.amountCyan {
+  color: #38bdf8;
+  text-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
 }
 
 .subtitle {
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   color: #94a3b8;
   font-weight: 600;
-  margin-bottom: 0.85rem;
-  min-height: 1.2rem;
+  margin-bottom: 0.65rem;
+  min-height: 1.05rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-/* Action Buttons */
+/* Action CTA Pill Buttons */
 .btnBase {
   width: 100%;
-  padding: 0.45rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.82rem;
+  padding: 0.42rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   transition: all 0.2s ease;
   margin-top: auto;
+  border: none;
+  box-sizing: border-box;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.btnTextDesktop {
+  display: inline;
+}
+
+.btnTextMobile {
+  display: none;
+}
+
+.btnChevron {
+  flex-shrink: 0;
 }
 
 /* Claimed State Button */
 .btnClaimed {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.15);
   color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.48);
   cursor: default;
 }
 
-/* Available Claim Button */
+/* Available Claim Button - Radiant Yellow/Orange Pill */
 .btnClaimNow {
   background: linear-gradient(135deg, #ffd700 0%, #f59e0b 100%);
-  color: #000000;
-  font-weight: 800;
+  color: #1c1917;
+  font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
 }
 
 .btnClaimNow:hover:not(:disabled) {
   background: linear-gradient(135deg, #ffe033 0%, #fbbf24 100%);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.65);
 }
 
 .btnClaimNow:disabled {
@@ -176,30 +309,142 @@
   cursor: not-allowed;
 }
 
-/* Locked State Button */
+/* Locked State Button - Subtle Dark Pill */
 .btnLocked {
-  background: rgba(0, 0, 0, 0.3);
-  color: #64748b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   cursor: not-allowed;
 }
 
 .countdownDisplay {
   font-family: monospace;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: #fbbf24;
 }
 
-@media (max-width: 480px) {
+/* Tablet Adjustments (769px - 1023px) */
+@media (max-width: 1023px) {
   .cardWrapper {
-    padding: 0.85rem 0.65rem;
+    min-height: 245px;
+    padding: 0.75rem 0.55rem 0.65rem;
   }
-  .rewardAsset {
-    max-width: 56px;
-    max-height: 56px;
+  .assetContainer {
+    height: 96px;
+    margin-bottom: 0.3rem;
+  }
+  .assetAmazonCard {
+    width: 104px;
+    height: 68px;
+  }
+  .assetCrown {
+    width: 94px;
+    height: 94px;
+  }
+  .assetGiftbox {
+    width: 90px;
+    height: 90px;
+  }
+  .assetCoinXs { width: 80px; height: 80px; }
+  .assetCoinSm { width: 84px; height: 84px; }
+  .assetCoinMd { width: 88px; height: 88px; }
+  .assetCoinLg { width: 92px; height: 92px; }
+}
+
+/* Mobile & iPhone 375px Specific Sizing (No horizontal overflow or clipping) */
+@media (max-width: 640px) {
+  .btnTextDesktop {
+    display: none;
+  }
+  .btnTextMobile {
+    display: inline;
+  }
+  .cardWrapper {
+    min-height: 228px;
+    padding: 0.65rem 0.35rem 0.55rem;
+    border-radius: 14px;
+  }
+  .headerRow {
+    margin-bottom: 0.2rem;
+    padding: 0 0.1rem;
+  }
+  .dayNumber {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+  }
+  .headerClaimedCheck {
+    width: 16px;
+    height: 16px;
+  }
+  .badgePill {
+    font-size: 0.52rem;
+    padding: 0.06rem 0.28rem;
+    letter-spacing: 0.01em;
+  }
+  .assetContainer {
+    height: 82px;
+    margin-bottom: 0.25rem;
+  }
+  .assetAmazonCard {
+    width: 86px;
+    height: 56px;
+    max-width: 94%;
+  }
+  .assetCrown {
+    width: 76px;
+    height: 76px;
+    max-width: 92%;
+  }
+  .assetGiftbox {
+    width: 72px;
+    height: 72px;
+    max-width: 90%;
+  }
+  .assetCoinXs { width: 64px; height: 64px; }
+  .assetCoinSm { width: 68px; height: 68px; }
+  .assetCoinMd { width: 70px; height: 70px; }
+  .assetCoinLg { width: 72px; height: 72px; }
+
+  .rewardTypeLabel {
+    font-size: 0.58rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.06rem;
   }
   .amountTitle {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.08rem;
+  }
+  .subtitle {
+    font-size: 0.64rem;
+    min-height: 1.1rem;
+    margin-bottom: 0.45rem;
+    white-space: normal;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .btnBase {
+    font-size: 0.74rem;
+    padding: 0.36rem 0.4rem;
+    gap: 0.2rem;
+    border-radius: 9999px;
+  }
+  .countdownDisplay {
+    font-size: 0.65rem;
+  }
+  .btnChevron {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Accessibility: Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .cardWrapper,
+  .rewardAsset,
+  .btnClaimNow,
+  .btnBase {
+    transition: none !important;
+    transform: none !important;
   }
 }

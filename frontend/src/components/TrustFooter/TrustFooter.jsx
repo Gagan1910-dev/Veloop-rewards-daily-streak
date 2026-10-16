@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import styles from './TrustFooter.module.css';
 
 const TrustFooter = () => {
@@ -7,29 +7,22 @@ const TrustFooter = () => {
     <footer className={styles.footerContainer}>
       <div className={styles.trustBar}>
         <div className={styles.leftGroup}>
-          <div className={styles.brandBadge}>
-            <img
-              src="/assets/daily-streak/Trust.png"
-              alt="VELoop Verified Trust Seal"
-              className={styles.trustImg}
-            />
+          <div className={styles.vrBadgeCircle}>
+            <span className={styles.vrText}>VR</span>
           </div>
+
           <div className={styles.textGroup}>
-            <div className={styles.titleRow}>
-              <span className={styles.officialTitle}>
-                Official rewards verified on VELoop Rewards
-              </span>
-              <ShieldCheck size={14} className={styles.verifiedIcon} />
-            </div>
-            <span className={styles.tagline}>
-              Stay active, stay rewarded • Server-authoritative ledger guarantee
+            <span className={styles.officialTitle}>
+              Official rewards only on{' '}
+              <strong className={styles.goldDomain}>VeloopRewards.in</strong>
             </span>
+            <span className={styles.dividerPipe}>|</span>
+            <span className={styles.tagline}>Stay active, stay rewarded!</span>
           </div>
         </div>
 
-        <div className={styles.badgePill}>
-          <ShieldCheck size={14} />
-          <span>100% Verified</span>
+        <div className={styles.mobileArrow}>
+          <ChevronRight size={18} />
         </div>
       </div>
     </footer>

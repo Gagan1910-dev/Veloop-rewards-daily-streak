@@ -12,13 +12,28 @@ const RewardGrid = ({ rewards, isClaiming, onClaim, onCountdownExpire }) => {
     <section className={styles.gridSection}>
       <div className={styles.subBanner}>
         <span className={styles.subBannerText}>
-          <span className={styles.sparkle}>✦</span> Come back tomorrow for more rewards! <span className={styles.sparkle}>✦</span>
+          <span className={styles.sparkle}>✦</span>
+          <span>Come back tomorrow for more rewards!</span>
+          <span className={styles.sparkle}>✦</span>
         </span>
       </div>
 
-      <div className={styles.cardsContainer}>
-        {/* Top row: Days 1 - 4 */}
-        <div className={styles.rowTop}>
+      {/* Desktop View: Single 7-column Row matching ref_desktop.jpg */}
+      <div className={styles.desktopGrid}>
+        {rewards.map((reward) => (
+          <RewardCard
+            key={reward.day}
+            rewardData={reward}
+            isClaiming={isClaiming}
+            onClaim={onClaim}
+            onCountdownExpire={onCountdownExpire}
+          />
+        ))}
+      </div>
+
+      {/* Mobile & Tablet View: 4 + 3 arrangement matching ref_mobile.jpg */}
+      <div className={styles.mobileGrid}>
+        <div className={styles.mobileRowTop}>
           {topRow.map((reward) => (
             <RewardCard
               key={reward.day}
@@ -30,8 +45,7 @@ const RewardGrid = ({ rewards, isClaiming, onClaim, onCountdownExpire }) => {
           ))}
         </div>
 
-        {/* Bottom row: Days 5 - 7 */}
-        <div className={styles.rowBottom}>
+        <div className={styles.mobileRowBottom}>
           {bottomRow.map((reward) => (
             <RewardCard
               key={reward.day}

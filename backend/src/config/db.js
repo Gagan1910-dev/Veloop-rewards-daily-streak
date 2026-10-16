@@ -9,17 +9,25 @@ try {
 }
 
 export const connectDB = async () => {
-  if (!process.env.MONGO_URI) {
-    throw new Error('MONGO_URI is not set in environment variables.');
-  }
+  const primaryUri = process.env.MONGO_URI || 'mongodb://localhost:27017/veloop_rewards';
+  const localFallbackUri = 'mongodb://localhost:27017/veloop_rewards';
 
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`[Database] MongoDB Atlas Connected: ${conn.connection.host}`);
+    const conn = await mongoose.connect(primaryUri, { serverSelectionTimeoutMS: 4000 });
+    console.log(`[Database] MongoDB Connected: ${conn.connection.host}`);
     return conn;
   } catch (error) {
-    console.error(`[Database Error] Connection failed: ${error.message}`);
+    if (primaryUri !== localFallbackUri) {
+      console.warn(`[Database Warning] Primary connection failed (${error.message}). Attempting local MongoDB fallback...`);
+      try {
+        const localConn = await mongoose.connect(localFallbackUri, { serverSelectionTimeoutMS: 3000 });
+        console.log(`[Database] Connected to Local MongoDB: ${localConn.connection.host}`);
+        return localConn;
+      } catch (localErr) {
+        console.error(`[Database Error] Local fallback failed: ${localErr.message}`);
+        throw error;
+      }
+    }
     throw error;
   }
 };
-

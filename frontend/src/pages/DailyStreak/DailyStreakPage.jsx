@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import StreakHeader from '../../components/StreakHeader/StreakHeader.jsx';
 import HeroBanner from '../../components/HeroBanner/HeroBanner.jsx';
-import StreakStats from '../../components/StreakStats/StreakStats.jsx';
-import UltimateReward from '../../components/UltimateReward/UltimateReward.jsx';
 import RewardGrid from '../../components/RewardGrid/RewardGrid.jsx';
 import WhyStreak from '../../components/WhyStreak/WhyStreak.jsx';
 import TrustFooter from '../../components/TrustFooter/TrustFooter.jsx';
@@ -135,6 +133,7 @@ const DailyStreakPage = () => {
       {/* Top Navbar */}
       <StreakHeader
         wallet={wallet}
+        streakData={streakData?.streak}
         onBack={handleBack}
       />
 
@@ -176,21 +175,13 @@ const DailyStreakPage = () => {
           </div>
         ) : (
           <>
-            {/* Hero Section */}
-            <HeroBanner />
-
-            {/* Streak & Stats Section with 7-Day Journey Track */}
-            <StreakStats
+            {/* Unified Hero Section (matches ref_desktop.jpg and ref_mobile.jpg) */}
+            <HeroBanner
               streakData={streakData.streak}
               nextReward={streakData.nextReward}
-              rewards={streakData.rewards}
-              onOpenCalendar={() => setIsHistoryModalOpen(true)}
-            />
-
-            {/* Ultimate Reward Banner */}
-            <UltimateReward
               ultimateReward={streakData.ultimateReward}
               day7Status={day7Status}
+              onOpenCalendar={() => setIsHistoryModalOpen(true)}
             />
 
             {/* 7-Day Interactive Reward Grid */}
