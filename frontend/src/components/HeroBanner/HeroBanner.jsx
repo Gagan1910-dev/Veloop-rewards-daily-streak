@@ -183,44 +183,6 @@ const HeroBanner = ({
             </div>
           </div>
         </div>
-
-        {/* 4. Mobile Ultimate Reward Card */}
-        <div className={styles.mobileUltimateCard}>
-          <div className={styles.mobileCrownThumb}>
-            <img
-              src="/assets/daily-streak/Day-7.png"
-              alt="Ultimate Crown"
-              className={styles.mobileCrownImg}
-            />
-          </div>
-
-          <div className={styles.mobileUltimateCenter}>
-            <span className={styles.mobileUltimateSub}>Ultimate Reward</span>
-            <div className={styles.mobileUltimateAmount}>{ultimateTitle}</div>
-            <div className={styles.amazonBadgePillSmall}>
-              <span className={styles.amazonLogoCircle}>a</span>
-              <span>{ultimateSubtitle}</span>
-            </div>
-          </div>
-
-          <div className={styles.mobileUltimateRight}>
-            <div className={styles.mobileLockBadge}>
-              {day7IsClaimed ? (
-                <div className={styles.claimedBadgeRow}>
-                  <Check size={14} />
-                  <span>Claimed</span>
-                </div>
-              ) : (
-                <div className={styles.lockedBadgeRow}>
-                  <div className={styles.mobileLockIconBox}>
-                    <Lock size={15} className={styles.lockIconPurple} />
-                  </div>
-                  <span className={styles.unlockMobileSub}>Unlock on Day 7</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

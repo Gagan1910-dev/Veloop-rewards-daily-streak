@@ -1,21 +1,21 @@
 .gridSection {
   width: 100%;
   max-width: 1240px;
-  margin: 0.85rem auto 1.5rem;
+  margin: 0.5rem auto 1.25rem;
   padding: 0 1rem;
   box-sizing: border-box;
 }
 
 .subBanner {
   text-align: center;
-  margin-bottom: 1.15rem;
+  margin-bottom: 0.85rem;
 }
 
 .subBannerText {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 0.95rem;
+  gap: 0.5rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #c4b5fd;
   letter-spacing: 0.02em;
@@ -77,12 +77,17 @@
 /* Specific iPhone 375px & Small Mobile Viewports */
 @media (max-width: 580px) {
   .gridSection {
+    margin: 0.35rem auto 0.85rem;
     padding: 0 0.5rem;
   }
 
+  .subBanner {
+    margin-bottom: 0.55rem;
+  }
+
   .subBannerText {
-    font-size: 0.85rem;
-    gap: 0.45rem;
+    font-size: 0.82rem;
+    gap: 0.4rem;
   }
 
   .mobileRowTop {

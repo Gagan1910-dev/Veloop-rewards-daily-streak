@@ -12,7 +12,6 @@ const RewardCard = ({
   const {
     day,
     title,
-    subtitle,
     reward,
     metadata,
     status,
@@ -42,12 +41,11 @@ const RewardCard = ({
   const isDay7 = day === 7;
 
   // Badge mapping matching official design:
-  // "Today" is strictly displayed for the card that is actionable today
   let badgeText = null;
   if (isDay7) {
     badgeText = 'VIP';
   } else if (day === 5) {
-    badgeText = 'Gift Card';
+    badgeText = 'Gift';
   } else if (day === 6) {
     badgeText = 'Coin';
   } else if (isAvailable) {
@@ -58,7 +56,7 @@ const RewardCard = ({
 
   let badgeClass = '';
   if (badgeText === 'Today') badgeClass = styles.badgeToday;
-  else if (badgeText === 'Gift Card') badgeClass = styles.badgeGift;
+  else if (badgeText === 'Gift') badgeClass = styles.badgeGift;
   else if (badgeText === 'Coin') badgeClass = styles.badgeCoin;
   else if (badgeText === 'VIP' || isDay7) badgeClass = styles.badgeVip;
 
@@ -78,7 +76,7 @@ const RewardCard = ({
       ? styles.assetCoinSm
       : styles.assetCoinXs;
 
-  // Amount color mapping matching official reference design (page 62)
+  // Amount color mapping
   let amountColorClass = styles.amountGold;
   if (isClaimed) {
     amountColorClass = styles.amountGreen;
@@ -95,6 +93,11 @@ const RewardCard = ({
   } else if (day === 7) {
     amountColorClass = styles.amountGold;
   }
+
+  const isVes = reward?.type === 'VES';
+  const displayTitle = isVes
+    ? `${title.startsWith('+') ? title : `+${title}`} VEs`
+    : title;
 
   return (
     <div
@@ -116,7 +119,7 @@ const RewardCard = ({
         ) : null}
       </div>
 
-      {/* Asset Image Container */}
+      {/* Asset Image Container - Centered, Vibrant & Proportional */}
       <div className={styles.assetContainer}>
         <img
           src={assetPath}
@@ -125,23 +128,20 @@ const RewardCard = ({
         />
       </div>
 
-      {/* Reward Details */}
-      <span className={styles.rewardTypeLabel}>
-        {isDay7 ? 'Ultimate Reward' : 'Daily Reward'}
-      </span>
-
-      <h4 className={`${styles.amountTitle} ${amountColorClass}`}>
-        {title}
-      </h4>
-
-      <p className={styles.subtitle}>
-        {subtitle || (reward?.type === 'VES' ? `${reward.amount} VEs` : 'Amazon Gift Card')}
-      </p>
+      {/* Reward Details - Clean, Single High-Impact Title & Subtype */}
+      <div className={styles.rewardDetails}>
+        <h4 className={`${styles.amountTitle} ${amountColorClass}`}>
+          {displayTitle}
+        </h4>
+        {!isVes && (
+          <span className={styles.rewardSubtype}>Amazon Card</span>
+        )}
+      </div>
 
       {/* Action CTA Button */}
       {isClaimed && (
         <div className={`${styles.btnBase} ${styles.btnClaimed}`}>
-          <Check size={15} strokeWidth={2.8} />
+          <Check size={13} strokeWidth={3} />
           <span>Claimed</span>
         </div>
       )}
@@ -155,14 +155,14 @@ const RewardCard = ({
         >
           {isClaiming ? (
             <>
-              <Loader2 size={14} className="spinner-border spinner-border-sm" />
+              <Loader2 size={12} className="spinner-border spinner-border-sm" />
               <span>Claiming...</span>
             </>
           ) : (
             <>
               <span className={styles.btnTextDesktop}>Claim Reward</span>
-              <span className={styles.btnTextMobile}>Claim Now</span>
-              <ChevronRight size={14} className={styles.btnChevron} />
+              <span className={styles.btnTextMobile}>Claim</span>
+              <ChevronRight size={13} className={styles.btnChevron} />
             </>
           )}
         </button>
@@ -170,7 +170,7 @@ const RewardCard = ({
 
       {isLocked && (
         <div className={`${styles.btnBase} ${styles.btnLocked}`}>
-          <Lock size={13} />
+          <Lock size={11} />
           {nextClaimAt && !countdown.isExpired ? (
             <span className={styles.countdownDisplay}>{countdown.formatted}</span>
           ) : (
