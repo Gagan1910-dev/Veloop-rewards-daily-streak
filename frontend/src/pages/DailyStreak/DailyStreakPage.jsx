@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import StreakHeader from '../../components/StreakHeader/StreakHeader.jsx';
-import HeroBanner from '../../components/HeroBanner/HeroBanner.jsx';
-import RewardGrid from '../../components/RewardGrid/RewardGrid.jsx';
+import BentoStreakHub from '../../components/BentoStreakHub/BentoStreakHub.jsx';
 import WhyStreak from '../../components/WhyStreak/WhyStreak.jsx';
 import TrustFooter from '../../components/TrustFooter/TrustFooter.jsx';
 import StreakSkeleton from '../../components/StreakSkeleton/StreakSkeleton.jsx';
@@ -175,21 +174,17 @@ const DailyStreakPage = () => {
           </div>
         ) : (
           <>
-            {/* Unified Hero Section (matches ref_desktop.jpg and ref_mobile.jpg) */}
-            <HeroBanner
+            {/* Modern Fintech Bento Streak Hub */}
+            <BentoStreakHub
               streakData={streakData.streak}
+              rewards={streakData.rewards}
               nextReward={streakData.nextReward}
               ultimateReward={streakData.ultimateReward}
               day7Status={day7Status}
-              onOpenCalendar={() => setIsHistoryModalOpen(true)}
-            />
-
-            {/* 7-Day Interactive Reward Grid */}
-            <RewardGrid
-              rewards={streakData.rewards}
               isClaiming={isClaiming}
               onClaim={handleOpenClaimModal}
               onCountdownExpire={handleCountdownExpire}
+              onOpenCalendar={() => setIsHistoryModalOpen(true)}
             />
 
             {/* Supporting Benefits Section */}
